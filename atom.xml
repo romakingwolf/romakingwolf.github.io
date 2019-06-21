@@ -18,8 +18,8 @@
   
   <entry>
     <title>Tendermint源码学习1：</title>
-    <link href="http://romakingwolf.com/2019/06/21/tendermint1/"/>
-    <id>http://romakingwolf.com/2019/06/21/tendermint1/</id>
+    <link href="http://romakingwolf.com/2019/06/21/bc-tm-1-1/"/>
+    <id>http://romakingwolf.com/2019/06/21/bc-tm-1-1/</id>
     <published>2019-06-21T13:50:43.000Z</published>
     <updated>2019-06-21T13:54:05.272Z</updated>
     
@@ -43,6 +43,37 @@
       <category term="Blockchain" scheme="http://romakingwolf.com/tags/Blockchain/"/>
     
       <category term="Tendermint" scheme="http://romakingwolf.com/tags/Tendermint/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用shadowsocks+privoxy加速Mac自带终端</title>
+    <link href="http://romakingwolf.com/2019/06/21/oth-skill-1/"/>
+    <id>http://romakingwolf.com/2019/06/21/oth-skill-1/</id>
+    <published>2019-06-21T13:50:43.000Z</published>
+    <updated>2019-06-21T14:28:40.972Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="在VPS上搭建SS服务"><a href="#在VPS上搭建SS服务" class="headerlink" title="在VPS上搭建SS服务"></a>在VPS上搭建SS服务</h2><h3 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h3><ol><li>检查python版本</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python --version</span><br></pre></td></tr></table></figure><p><strong>需要 python 版本 &gt;= 2.6</strong></p><ol start="2"><li>安装依赖工具</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yum install m2crypto python-setuptools</span><br><span class="line">$ easy_install pip</span><br></pre></td></tr></table></figure><h3 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure><h3 id="配置shadowsocks服务"><a href="#配置shadowsocks服务" class="headerlink" title="配置shadowsocks服务"></a>配置shadowsocks服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/shadowsocks.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;172.0.0.1&quot;,</span><br><span class="line">    &quot;server_port&quot;: 22075,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;password&quot;: &quot;123456&quot;,</span><br><span class="line">    &quot;timeout&quot;: 600,</span><br><span class="line">    &quot;method&quot;: &quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;workers&quot;: 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>server：SS服务ip</li><li>server_port：SS服务端口</li><li>local_port：shadowsocks本地服务端口</li><li>password：SS服务连接密码</li><li>timeout：SS服务连接超时时间</li><li>method：加密方式</li><li>workers：最大连接数</li></ul><h3 id="开启端口"><a href="#开启端口" class="headerlink" title="开启端口"></a>开启端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --query-port=22075/tcp // 检查端口是不是已经启用了 如果已经占用了换个端口就好, 改一下上面的json文件</span><br><span class="line">$ firewall-cmd --zone=public --add-port=22075/tcp --permanent // 永久开启22075端口</span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure><h3 id="启动shadowsocks"><a href="#启动shadowsocks" class="headerlink" title="启动shadowsocks"></a>启动shadowsocks</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure><h3 id="检查是否启动"><a href="#检查是否启动" class="headerlink" title="检查是否启动"></a>检查是否启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux|grep shadowsocks</span><br></pre></td></tr></table></figure><h2 id="privoxy安装和使用说明"><a href="#privoxy安装和使用说明" class="headerlink" title="privoxy安装和使用说明"></a>privoxy安装和使用说明</h2><h3 id="安装Homebrew"><a href="#安装Homebrew" class="headerlink" title="安装Homebrew"></a>安装Homebrew</h3><p>需要安装Mac OS下不可或缺的套件管理器： <a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew</a></p><h3 id="安装privoxy"><a href="#安装privoxy" class="headerlink" title="安装privoxy"></a>安装privoxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install privoxy</span><br></pre></td></tr></table></figure><h3 id="配置privoxy"><a href="#配置privoxy" class="headerlink" title="配置privoxy"></a>配置privoxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/local/etc/privoxy/config</span><br></pre></td></tr></table></figure><p>在 config 配置文件的最底部，加入以下代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">listen-address 0.0.0.0:8118</span><br><span class="line">forward-socks5 / localhost:1080 .</span><br></pre></td></tr></table></figure><blockquote><p>注意：0.0.0.0 可以让其他设备访问到，若不需要，请修改成用 127.0.0.1；8118是HTTP代理的默认端口；localhost:1080 是 SOCKS5（shadowsocks） 默认的地址，可根据需要自行修改，且注意不要忘了最后有一个空格和点号。</p></blockquote><h3 id="启动privoxy"><a href="#启动privoxy" class="headerlink" title="启动privoxy"></a>启动privoxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/sbin/privoxy /usr/local/etc/privoxy/config</span><br></pre></td></tr></table></figure><h3 id="检查是否启动成功"><a href="#检查是否启动成功" class="headerlink" title="检查是否启动成功"></a>检查是否启动成功</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -na | grep 8118</span><br></pre></td></tr></table></figure><h2 id="终端使用代理"><a href="#终端使用代理" class="headerlink" title="终端使用代理"></a>终端使用代理</h2><h3 id="进行终端配置"><a href="#进行终端配置" class="headerlink" title="进行终端配置"></a>进行终端配置</h3><p>修改配置文件，增加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function proxy_off()&#123;</span><br><span class="line">    unset http_proxy</span><br><span class="line">    unset https_proxy</span><br><span class="line">    echo -e &quot;已关闭代理&quot;</span><br><span class="line">&#125;</span><br><span class="line">function proxy_on() &#123;</span><br><span class="line">    export no_proxy=&quot;localhost,127.0.0.1,localaddress,.localdomain.com&quot;</span><br><span class="line">    export http_proxy=&quot;http://127.0.0.1:8118&quot;</span><br><span class="line">    export https_proxy=$http_proxy</span><br><span class="line">    echo -e &quot;已开启代理&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="打开-关闭代理"><a href="#打开-关闭代理" class="headerlink" title="打开/关闭代理"></a>打开/关闭代理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ proxy_on</span><br><span class="line">已开启代理</span><br><span class="line">$ proxy_off</span><br><span class="line">已关闭代理</span><br></pre></td></tr></table></figure><h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ip.gs</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;在VPS上搭建SS服务&quot;&gt;&lt;a href=&quot;#在VPS上搭建SS服务&quot; class=&quot;headerlink&quot; title=&quot;在VPS上搭建SS服务&quot;&gt;&lt;/a&gt;在VPS上搭建SS服务&lt;/h2&gt;&lt;h3 id=&quot;安装工具&quot;&gt;&lt;a href=&quot;#安装工具&quot; class=&quot;
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://romakingwolf.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+      <category term="技巧" scheme="http://romakingwolf.com/categories/%E5%85%B6%E5%AE%83/%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="Shadowsocks" scheme="http://romakingwolf.com/tags/Shadowsocks/"/>
+    
+      <category term="Mac" scheme="http://romakingwolf.com/tags/Mac/"/>
+    
+      <category term="terminal" scheme="http://romakingwolf.com/tags/terminal/"/>
     
   </entry>
   
